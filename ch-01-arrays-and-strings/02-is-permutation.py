@@ -1,51 +1,40 @@
 # Determine whether or not one string is a permutation of another.
 
-def is_permutation(str1, str2):
-  counter = Counter()
-  for letter in str1:
-    counter[letter] += 1
-  for letter in str2:
-    if not letter in counter:
-      return False
-    counter[letter] -= 1
-    if counter[letter] == 0:
-      del counter[letter]
-  return len(counter) == 0
-
-class Counter(dict):
-  def __missing__(self, key):
-    return 0
-
 #Ask if string is case sensitive and if whitespace is significant
 
-#By sorting
-def is_permutation_sort(str1,str2):
-  if len(str1)!=len(str2):
+# By sorting
+### Time: O(nlgn) where n is the length of the longer string
+### Space: O(1) if it is inplace sorting
+def is_permutation_1(str1,str2):
+  if len(str1)!=len(str2): # fail fast if length is not equal
     return False
-  for a,b in zip(sorted(str1),sorted(str2)):
+  for a,b in zip(sorted(str1),sorted(str2)): # sort and compare char at the same index
     if a!=b:
       return False
   return True
 
-#By dictionary
-def is_permutation_dict(str1,str2):
-  if len(str1)!=len(str2):
+# By dictionary
+### Time: O(n)
+### Space: O(n)
+def is_permutation_2(str1,str2):
+  if len(str1)!=len(str2): # fail fast
     return False
   ref={}
   for i in str1:
-    ref[i] = ref.get(i,0) + 1
+    ref[i] = ref.get(i,0) + 1 # store char frequency in str1 into dictionary 
   for c in str2:
     if c not in ref:
       return False
     ref[c] = ref[c]-1
   return not sum(ref.values())
 
-#By array
-def is_permutation_list(str1,str2):
-  if len(str1)!=len(str2):
+# By array
+### Time: O(n)
+### Space: O(1)
+def is_permutation_3(str1,str2):
+  if len(str1)!=len(str2): #fail fast
     return False
-  #assuming ASCII
-  ref=[0]*128
+  ref=[0]*128 #assuming ASCII character set
   for i in str1:
     ref[ord(i)] +=1
   for c in str2:
@@ -55,8 +44,15 @@ def is_permutation_list(str1,str2):
   return True
 
 if __name__ == "__main__":
-  import sys
-  print(is_permutation(sys.argv[-2], sys.argv[-1]))
-  print(is_permutation_dict(sys.argv[-2], sys.argv[-1]))
-  print(is_permutation_sort(sys.argv[-2], sys.argv[-1]))
-  print(is_permutation_list(sys.argv[-2], sys.argv[-1]))
+  s1="hello"
+  b1="world"
+  a2="John"
+  c2="ohnJ"
+  print(f"Test case 1:{s1,b1}")
+  print(is_permutation_1(s1,b1))
+  print(is_permutation_2(s1,b1))
+  print(is_permutation_3(s1,b1))
+  print(f"Test case 2:{a2,c2}")
+  print(is_permutation_1(a2,c2))
+  print(is_permutation_2(a2,c2))
+  print(is_permutation_3(a2,c2))
