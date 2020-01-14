@@ -1,20 +1,30 @@
 # Return the k^{th} to last node in a linked list.
 
-import unittest
+# Is the linked list size known?
+# kth => recursive problem
 
-def kth_to_last(head, k):
-  lead, follow = head, head
-  for _ in xrange(k):
-    if not lead:
-      return None
-    lead = lead.next
-  while lead:
-    lead, follow = lead.next, follow.next
-  return follow
+import unittest
 
 class Node():
   def __init__(self, data, next=None):
     self.data, self.next = data, next
+
+# By two pointers, iterative
+# placing two pointers k apart, when front pointer reaches the end
+# back pointer will be at kth from last
+### Time: O(n)
+### Space: O(1)
+def kth_to_last(head, k):
+  front, back = head, head
+  for _ in range(k):
+    if not front:
+      return None
+    front = front.next
+  while front:
+    back, front = back.next, front.next
+  return back
+
+# TODO Recursive
 
 class Test(unittest.TestCase):
   def test_kth_to_last(self):

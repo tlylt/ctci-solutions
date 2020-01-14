@@ -1,15 +1,18 @@
 # Delete the given nonterminal node from the containing linked list.
+# Only access is to the middle node
 
 import unittest
-
-def delete_middle(node):
-  next = node.next
-  node.data = next.data
-  node.next = next.next
 
 class Node():
   def __init__(self, data, next=None):
     self.data, self.next = data, next
+
+# Copy the data from next node to current node
+# This will not work if node to be deleted is at the end
+# can consider making it a dummy if it is the last node
+def delete_middle(node):
+  node.data = node.next.data
+  node.next = node.next.next
 
 class Test(unittest.TestCase):
   def test_delete_middle(self):

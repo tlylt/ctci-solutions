@@ -3,6 +3,15 @@
 
 import unittest
 
+class Node():
+  def __init__(self, data, next=None):
+    self.data, self.next = data, next
+  def __str__(self):
+    string = str(self.data)
+    if self.next:
+      string += ',' + str(self.next)
+    return string
+
 def sum_lists(num1, num2):
   node1, node2 = num1, num2
   carry = 0
@@ -21,19 +30,9 @@ def sum_lists(num1, num2):
     else:
       result_node = Node(value % 10)
       result_head = result_node
-    carry = value / 10
+    carry = value // 10
   return result_head
 
-class Node():
-  def __init__(self, data, next=None):
-    self.data, self.next = data, next
-  
-  def __str__(self):
-    string = str(self.data)
-    if self.next:
-      string += ',' + str(self.next)
-    return string
-    
 class Test(unittest.TestCase):
   def test_sum_lists(self):
     num1 = Node(1,Node(2,Node(3)))
