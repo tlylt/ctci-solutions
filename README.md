@@ -1,3 +1,9 @@
+I am updating and adding solutions to the questions from the book: Cracking The Coding Interview.
+
+Some of these solutions are described in the book and I have added comments to the code to make it easier to go through.
+
+# Original README from the forked repo
+--------------------------------------
 # CtCI Solutions
 
 This repository will contain Python solutions to the problems in the sixth
