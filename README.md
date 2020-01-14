@@ -2,8 +2,8 @@ I am updating and adding solutions to the questions from the book: Cracking The 
 
 Some of these solutions are described in the book and I have added comments to the code to make it easier to go through.
 
-# Original README from the forked repo
---------------------------------------
+Original README from the forked repo
+____________________________________
 # CtCI Solutions
 
 This repository will contain Python solutions to the problems in the sixth
