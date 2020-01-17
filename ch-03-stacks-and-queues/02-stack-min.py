@@ -34,6 +34,36 @@ class Node():
       string += ',' + str(self.next)
     return string
 
+################################################################
+
+class MinStack_1():
+  def __init__(self):
+    self.container = []
+  
+  def min(self):
+    if self.container:
+      return self.container[-1].local_min
+    return None
+
+  def push(self,data):
+    curr_min = self.min()
+    if not curr_min:
+      curr_min = float('inf')
+    min_val = min(data,curr_min)
+    new_val = Node_1(data,min_val)
+    self.container.append(new_val)
+
+  def pop(self):
+    if self.container:
+      item = self.container.pop()
+      return item.data
+    return None
+
+class Node_1():
+  def __init__(self,data,min_val=None):
+    self.data = data
+    self.local_min = min_val
+
 import unittest
 
 class Test(unittest.TestCase):
@@ -53,6 +83,22 @@ class Test(unittest.TestCase):
     self.assertEqual(min_stack.pop(), 6)
     self.assertEqual(min_stack.pop(), 7)
     self.assertEqual(min_stack.min(), None)
+  def test_min_stack_1(self):
+    min_stack_1 = MinStack_1()
+    self.assertEqual(min_stack_1.min(), None)
+    min_stack_1.push(7)
+    self.assertEqual(min_stack_1.min(), 7)
+    min_stack_1.push(6)
+    min_stack_1.push(5)
+    self.assertEqual(min_stack_1.min(), 5)
+    min_stack_1.push(10)
+    self.assertEqual(min_stack_1.min(), 5)
+    self.assertEqual(min_stack_1.pop(), 10)
+    self.assertEqual(min_stack_1.pop(), 5)
+    self.assertEqual(min_stack_1.min(), 6)
+    self.assertEqual(min_stack_1.pop(), 6)
+    self.assertEqual(min_stack_1.pop(), 7)
+    self.assertEqual(min_stack_1.min(), None)
 
 if __name__ == "__main__":
   unittest.main()
