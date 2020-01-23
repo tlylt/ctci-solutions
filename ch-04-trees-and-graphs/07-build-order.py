@@ -1,21 +1,30 @@
 # Determine a build order given a list of projects and their dependencies.
+# topological sort
+
+# Algo explained:
+# first add notes with no incoming edges, these are the roots
+# remove all outgoing nodes from these roots, since they have been built, it doesn't matter if 
+# another project depends on them.
+# now find projects with no dependencies and repeat
 
 def build_order(projects, dependencies):
   nodes = {}
+  # initialize and build graph
   for project in projects:
     nodes[project] = GraphNode(project)
   for dependency in dependencies:
     nodes[dependency[0]].add_edge(nodes[dependency[1]])
+
   queue = Queue()
   for project in projects:
-    node = nodes[project]
-    if not node.dependencies_left:
+    node = nodes[project] # check node
+    if not node.dependencies_left: # if node is independent, add to Queue
       queue.add(node)
   build_order = []
   while queue.is_not_empty():
     node = queue.remove()
     build_order.append(node.data)
-    for dependent in node.edges:
+    for dependent in node.edges: # start removing dependency from node edges
       dependent.dependencies_left -= 1
       if not dependent.dependencies_left:
         queue.add(dependent)
@@ -23,6 +32,7 @@ def build_order(projects, dependencies):
     return Exception("Cycle detected")
   return build_order
 
+# representation of Node
 class GraphNode():
   def __init__(self, data):
     self.data = data
@@ -33,6 +43,7 @@ class GraphNode():
     self.edges.append(node)
     node.dependencies_left += 1
 
+# representation of Queue
 class Queue():
   def __init__(self):     self.array = []
   def add(self, item):    self.array.append(item)

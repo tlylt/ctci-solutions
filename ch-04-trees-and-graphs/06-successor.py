@@ -1,17 +1,25 @@
 # Return the successor of a node in a binary search tree.
 
+# Pseudocode
+# def function(node):
+#  if node has right subtree
+#     return leftmost of the right subtree
+#  while node is a right child
+#     node = node.parent
+#  node is a left child, next node is the parent node
+
+
 def successor(node):
   if not node:
     return None
   child = node.right
-  if child:
+  if child: #if there is right subtree
     while child.left:
-      child = child.left
-  if child:
+      child = child.left # find the leftmost child of right subtree
     return child
-  if node.parent and node.parent.data > node.data:
-    return node.parent
-  return None
+  while node.parent and node.parent.left != node: # if there is actually parent node
+    node = node.parent # traverse up until node is not a right child
+  return node.parent
 
 class Node():
   def __init__(self, data, left=None, right=None):

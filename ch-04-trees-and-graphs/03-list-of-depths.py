@@ -5,16 +5,16 @@ def list_of_depths(binary_tree):
   if not binary_tree:
     return []
   lists = []
-  queue = Queue()
-  current_depth = -1
-  current_tail = None
+  queue = Queue() # make queue
+  current_depth = -1 # track current depth
+  current_tail = None # pointer for linked list
   node = binary_tree
   node.depth = 0
   while node:
-    if node.depth == current_depth:
+    if node.depth == current_depth: # if this is not the first node in the level
       current_tail.next = ListNode(node.data)
       current_tail = current_tail.next
-    else:
+    else: # first node in the new level
       current_depth = node.depth
       current_tail = ListNode(node.data)
       lists.append(current_tail)

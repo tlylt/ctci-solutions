@@ -1,25 +1,26 @@
 # Find a route from the first node to the second node in a directed graph.
 
 def find_route(node1, node2):
-  found_path = None
+  found_path = None # Default to None, meaning no route
   queue = Queue()
   node = node1
-  node.shortest_path = [node]
-  all_visited_nodes = [node]
+  node.shortest_path = [node] # setting shortest_path on start node
+  all_visited_nodes = [node] # checking if a node is visited
   while node:
-    for adjacent in node.adjacency_list:
-      if not adjacent.shortest_path:
-        adjacent.shortest_path = node.shortest_path + [adjacent]
-        if adjacent == node2:
+    for adjacent in node.adjacency_list: # look at all next level reachable notes from visiting node
+      if not adjacent.shortest_path: # shortest_path is default to none, so this checks for unvisited adjancent nodes
+        adjacent.shortest_path = node.shortest_path + [adjacent] # writing shortest path to adjacent nodes
+        if adjacent == node2: # if found, stop
           found_path = node.shortest_path + [adjacent]
           break
-        queue.add(adjacent)
+        queue.add(adjacent) # after visiting, put into queue
         all_visited_nodes.append(adjacent)
-    node = queue.remove()
-  for visited in all_visited_nodes:
+    node = queue.remove() # visit the next node in queue
+  for visited in all_visited_nodes: # resetting for next use
     visited.shortest_path = None
   return found_path
   
+# representation of graph nodes
 class Node():
   def __init__(self, data, adjacency_list=None):
     self.data = data
@@ -32,6 +33,7 @@ class Node():
   def __str__(self):
     return self.data
 
+# representation of Queue
 class Queue():
   def __init__(self):
     self.array = []

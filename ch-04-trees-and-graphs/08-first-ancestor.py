@@ -2,15 +2,15 @@
 
 def first_common_ancestor(node1, node2):
   search1, search2 = node1, node2
-  ancestors1, ancestors2 = {}, {}
-  while search1 or search2:
+  ancestors1, ancestors2 = {}, {} # for record
+  while search1 or search2: # while there is still node
     if search1:
-      if search1 in ancestors2:
+      if search1 in ancestors2: # if node1's parent has been seen in node2's ancestor tree
         return search1
-      ancestors1[search1] = True
-      search1 = search1.parent
+      ancestors1[search1] = True # add node1 to node1's ancestor tree
+      search1 = search1.parent # traverse upwards
     if search2:
-      if search2 in ancestors1:
+      if search2 in ancestors1: 
         return search2
       ancestors2[search2] = True
       search2 = search2.parent

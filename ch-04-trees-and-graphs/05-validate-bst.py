@@ -1,10 +1,13 @@
 # Validate that a binary tree is a binary search tree.
 
+# recursive method
+### Time: O(n)
+### Space: O(H) where H is the height of tree
 def validate_tree(binary_tree):
   return validate_tree_node(binary_tree, -float('inf'), float('inf'))
 
 def validate_tree_node(node, left_bound, right_bound):
-  if not node:
+  if not node:  # base case
     return True
   return node.data >= left_bound and node.data <= right_bound and \
          validate_tree_node(node.left, left_bound, node.data) and \
